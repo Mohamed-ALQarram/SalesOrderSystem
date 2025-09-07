@@ -1,0 +1,29 @@
+﻿<form asp-action="AddRole" method="post" class="myform">
+    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+    <!-- Username -->
+    <div class="form-group">
+        <label for"userName" class="form-label"> User Name</label>
+        <input id="userName" name="userName" value="@ViewBag?.userName" class="form-control" />
+    </div>
+
+    <!-- Role Selection -->
+    <div class="form-group">
+        <label for="Role" class="form-label fw-semibold">Select Role</label>
+        @* asp-for="RoleId" *@
+        <select class="form-select" style="font-size: 0.9rem;" name="Name" id="Role">
+            @if (User.IsInRole("Admin"))
+            {
+                <option value="" disabled selected>-- Choose Role --</option>
+                <option value="Admin">Admin</option>
+                <option value="Cashier">Cashier</option>
+            }
+            <option value="User">User</option>
+        </select>
+    </div>
+
+    <!-- Submit -->
+    <div class="form-group mt-3 d-flex justify-content-center" >
+        <button type="submit" class="btn btn-block btn-primary btn-lg"><small><i class="far fa-user pr-2"></i>Save</small></button>
+    </div>
+         <a asp-action="Register" class="text-primary fw-semibold">Create New User</a>
+</form>

@@ -1,0 +1,49 @@
+﻿@model Customer
+
+@{
+    var type = Model.GetType().Name;
+}
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h3 class="text-center mb-4">Edit Customer</h3>
+
+        <form asp-action="SaveEditedCustomer" asp-controller="Customer" method="post">
+            <div class="mb-3">
+                @Html.LabelFor(x => x.CustomerId, new { @class = "form-label" })
+                @Html.EditorFor(x => x.CustomerId, new { htmlAttributes = new { @readonly = "readonly", value = Model.CustomerId, @class = "form-control" } })
+            </div>
+
+            <div class="mb-3">
+                <label for="Type" class="form-label">Type</label>
+                <input type="text" class="form-control" id="Type" name="Type"
+                       value="@type" readonly>
+            </div>
+           
+            <div id="formContainer" class="mt-3">
+                @if (Model is Person)
+                {
+                    <partial name="PersonForm" model="Model" />
+                }
+                else if (Model is Company)
+                {
+                    <partial name="CompanyForm" model="Model" />
+                }
+            </div>
+            
+
+            <div class="mb-3">
+                @Html.LabelFor(x => x.phone, new { @class = "form-label" })
+                @Html.EditorFor(x => x.phone, new { htmlAttributes = new { value = Model.phone, @class = "form-control" } })
+
+            </div>
+
+            <div class="text-center">
+                @Html.ActionLink("Back", "Index","Customer",null,
+                new { @class = "btn btn-primary px-4 shadow-sm" })
+
+
+                <button type="submit" class="btn btn-primary px-4">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

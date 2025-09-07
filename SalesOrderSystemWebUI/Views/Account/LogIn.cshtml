@@ -1,0 +1,70 @@
+﻿@model SignInViewModel
+@{
+    Layout = "_IdentityLayout";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card py-3 px-2">
+                <p class="text-center mb-3 mt-2"> CONNECT WITH </p>
+                <div class="row mx-auto ">
+                    <div class="col-4">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="col-4">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <div class="col-4">
+                        <i class="fab fa-google"></i>
+                    </div>
+                </div>
+                <div class="division">
+                    <div class="row">
+                        <div class="col-3"><div class="line l"></div></div>
+                        <div class="col-6"><span>OR</span></div>
+                        <div class="col-3"><div class="line r"></div></div>
+                    </div>
+                </div>
+                <form asp-action="LogIn" method="post" class="myform">
+                    <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                    @Html.AntiForgeryToken()
+
+                    <!-- Username -->
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.UserName, new { @class = "form-label fw-semibold" })
+                        @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Enter username", style = "font-size: 0.9rem;" })
+                        @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger small" })
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.PasswordHash, "Password", new { @class = "form-label fw-semibold" })
+                        @Html.PasswordFor(x => x.PasswordHash, new { @class = "form-control", placeholder = "Enter password", style = "font-size: 0.9rem;" })
+                        @Html.ValidationMessageFor(x => x.PasswordHash, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group form-check">
+                                @Html.LabelFor(x => x.RememberMe, new { @class = "form-check-label" })
+                                @Html.CheckBoxFor(x => x.RememberMe, new { @class = "form-check-input" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12 bn"> <a asp-action="Login" class="text-primary fw-semibold">Forgot Password?</a></div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-block btn-primary btn-lg"><small><i class="far fa-user pr-2"></i>Sign In</small></button>
+                    </div>
+
+                    <p class="text-center text-muted mt-3 mb-0 small" style="color: #ddd !important">
+                        Create new account? <a asp-action="Register" class="text-primary fw-semibold">Register</a>
+                    </p>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,105 @@
+﻿@model Customer
+@{
+    Dictionary<string, string> routeData;
+    if(Model is Person p)
+    {
+        routeData = new Dictionary<string, string>
+        {
+            { "Type", p.GetType().Name},
+            { "CustomerId", p.CustomerId.ToString() },
+            { "phone", p.phone},
+            { "FullName", p.FullName! },
+            { "BillingAddress", p.BillingAddress }
+        };
+    }
+    else if(Model is Company company2)
+    {
+        routeData = new Dictionary<string, string>
+        {
+            { "Type", company2.GetType().Name},
+            { "CustomerId", company2.CustomerId.ToString() },
+            { "phone", company2.phone},
+            { "CompanyName", company2.CompanyName! },
+            { "Location", company2.Location }
+        };
+
+    }
+    else
+    {
+        routeData = new Dictionary<string, string>
+        {
+            { "CustomerId", Model.CustomerId.ToString() },
+            { "phone", Model.phone},
+        };
+
+    }
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header text-white"
+         style="background: linear-gradient(90deg, #0d6efd, #0a58ca);">
+        <h5 class="mb-0">Customer #@Model.CustomerId</h5>
+    </div>
+
+    <div class="card-body">
+        <dl class="row">
+            @if(Model is Person person)
+            {
+            <dt class="col-sm-3 fw-bold">Full Name</dt>
+                <dd class="col-sm-9">@person.FullName</dd>
+            }
+            else if(Model is Company company )
+            {
+                <dt class="col-sm-3 fw-bold">Company Name</dt>
+                <dd class="col-sm-9">@company.CompanyName</dd>
+            }
+
+            <dt class="col-sm-3 fw-bold">phone</dt>
+            <dd class="col-sm-9">@Model.phone</dd>
+            @if (Model is Person person1)
+            {
+                <dt class="col-sm-3 fw-bold">Billing Address</dt>
+                <dd class="col-sm-9">@person1.BillingAddress</dd>
+            }
+            else if (Model is Company company1)
+            {
+                <dt class="col-sm-3 fw-bold">Location</dt>
+                <dd class="col-sm-9">@company1.Location</dd>
+            }
+
+        </dl>
+    </div>
+
+    <div class="card-footer text-end">
+        <a asp-action="Index" asp-controller="Customer" class="btn btn-secondary btn-sm me-2">Back</a>
+        <a asp-action="EditCustomer" asp-controller="Customer" asp-all-route-data="@routeData"
+        class="btn btn-primary btn-sm">Edit</a>
+    </div>
+</div>
+@foreach (var item in Model.Orders)
+{
+    <div class="card shadow-sm border-0 mb-2" style="font-size: 0.9rem;">
+        <div class="card-header py-2 px-3 text-white"
+             style="background: linear-gradient(90deg, #6c757d, #495057); font-size: 0.85rem;">
+            <strong>Order #@item.OrderId</strong> - @item.OrderStatus
+        </div>
+
+        <div class="card-body p-2">
+            <dl class="row mb-0">
+
+                <dt class="col-sm-4 fw-bold">Total Price</dt>
+                <dd class="col-sm-8">@item.TotalPrice.ToString("C")</dd>
+            </dl>
+
+            <div class="mt-2">
+                <strong>Items:</strong>
+                <ul class="list-unstyled ms-2 mb-0" style="font-size: 0.85rem;">
+                    @foreach (var orderItem in item.OrderItems)
+                    {
+                        <li>- @orderItem.Product.ProductName (@orderItem.Quantity)</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

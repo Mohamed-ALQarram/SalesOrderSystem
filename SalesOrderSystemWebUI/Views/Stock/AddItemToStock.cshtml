@@ -1,0 +1,63 @@
+﻿@using Models.Enums
+
+@{
+    ViewData["Title"] = "AddItemToStock";
+}
+@model List<Stock>
+
+<div class="container mt-5">
+    <div class="card shadow-sm p-4">
+        <h3 class="text-center mb-4">Add Item to Stock</h3>
+
+        <form action="/StockItem/AddItem" method="post">
+            <div class="mb-3">
+                <label for="ProductId" class="form-label">Product ID</label>
+                <input type="number" class="form-control" id="ProductId" name="ProductId" />
+            </div>
+
+            <div class="mb-3">
+                <label for="ProductName" class="form-label">Product Name</label>
+                <input type="text" class="form-control" id="ProductName" name="ProductName" />
+            </div>
+            <!-- Select Product Type (from Enum) -->
+            <div class="mb-3">
+                <label for="Type" class="form-label">Product Type</label>
+                <select class="form-select" name="Type" id="Type">
+                    @foreach (var item in Enum.GetValues(typeof(ProductType)))
+                    {
+                        <option value="@item">@item</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="Price" name="Price" />
+            </div>
+
+            <div class="mb-3">
+                <label for="Quantity" class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="Quantity" name="Quantity" />
+            </div>
+
+
+            <!-- Select Stock (from List<Stock>) -->
+            <div class="mb-3">
+                <label for="StockId" class="form-label">Stock</label>
+               <select class="form-select" name="StockId" id="StockId">
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.StockId">@item.StockId</option>
+                    }
+                </select>
+             </div>
+
+            <div class="text-center">
+                @Html.ActionLink("Back", "GetAllStocksWithItems", "Stock",null,
+                new { @class = "btn btn-primary px-4 shadow-sm" })
+
+                <button type="submit" class="btn btn-primary px-4">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

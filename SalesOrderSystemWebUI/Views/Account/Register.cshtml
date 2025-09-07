@@ -1,0 +1,103 @@
+﻿@model RegisterViewModel
+@{
+    Layout = "_IdentityLayout";
+}
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+            <div class="card py-3 px-2">
+                <p class="text-center mb-3 mt-2"> CONNECT WITH </p>
+                <div class="row mx-auto ">
+                    <div class="col-4">
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                    <div class="col-4">
+                        <i class="fab fa-facebook"></i>
+                    </div>
+                    <div class="col-4">
+                        <i class="fab fa-google"></i>
+                    </div>
+                </div>
+                <div class="division">
+                    <div class="row">
+                        <div class="col-3" ><div class="line l"></div></div>
+                        <div class="col-6"><span>OR</span></div>
+                        <div class="col-3"><div class="line r"></div></div>
+                    </div>
+                </div>
+                <form asp-action="Register" method="post" class="myform">
+                            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                    @Html.AntiForgeryToken()
+                            <!-- Username -->
+                    <div class="form-group">
+                                @Html.LabelFor(x => x.UserName, new { @class = "form-label fw-semibold" })
+                                @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Enter username", style = "font-size: 0.9rem;" })
+                                @Html.ValidationMessageFor(x => x.UserName, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <!-- Email -->
+                    <div class="form-group">
+                                @Html.LabelFor(x => x.Email, new { @class = "form-label fw-semibold" })
+                                @Html.TextBoxFor(x => x.Email, new { @class = "form-control", placeholder = "Enter email", type = "email", style = "font-size: 0.9rem;" })
+                                @Html.ValidationMessageFor(x => x.Email, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <!-- Password -->
+                    <div class="form-group">
+                                @Html.LabelFor(x => x.Password, "Password", new { @class = "form-label fw-semibold" })
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Enter password", style = "font-size: 0.9rem;" })
+                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger small" })
+                            </div>
+                            <!-- Confirm Password -->
+                    <div class="form-group">
+                                @Html.LabelFor(x => x.ConfirmPassword, "Confirm Password", new { @class = "form-label fw-semibold" })
+                                @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "form-control", placeholder = "Re-enter password", style = "font-size: 0.9rem;" })
+                        @Html.ValidationMessageFor(x => x.ConfirmPassword, "", new { @class = "text-danger small" })
+                            </div>
+                            <!-- Phone -->
+                    <div class="form-group">
+                                @Html.LabelFor(x => x.PhoneNumber, new { @class = "form-label fw-semibold" })
+                                @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", placeholder = "Enter phone number", style = "font-size: 0.9rem;" })
+                                @Html.ValidationMessageFor(x => x.PhoneNumber, "", new { @class = "text-danger small" })
+                            </div>
+
+                            <!-- Role Selection -->
+                    <div class="form-group">
+                                <label class="form-label fw-semibold">Select Role</label>
+                                @* asp-for="RoleId" *@
+                                <select class="form-select"  style="font-size: 0.9rem;" name="Role" id="Role">
+                                    @if(User.IsInRole("Admin"))
+                                    {
+                                    <option value="" disabled selected>-- Choose Role --</option>
+                                    <option value="Admin">Admin</option>
+                                <option value="Cashier">Cashier</option>
+                                    }
+                                    <option value="User">User</option>
+                                </select>
+                                @* @Html.ValidationMessageFor(x => x.RoleId, "", new { @class = "text-danger small" }) *@
+                            </div>
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="form-group form-check">
+                                @Html.LabelFor(x => x.RememberMe, new { @class = "form-check-label" })
+                                @Html.CheckBoxFor(x => x.RememberMe, new { @class = "form-check-input" })
+                            </div>
+                        </div>
+                    </div>
+
+                            <!-- Submit -->
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-block btn-primary btn-lg"><small><i class="far fa-user pr-2"></i>Register</small></button>
+                    </div>
+                    @if(User is null)
+                    {
+                    <p class="text-center text-muted mt-3 mb-0 small" style="color:#ddd !important">
+                        Already have an account? <a asp-action="LogIn" class="text-primary fw-semibold">Login</a>
+                            </p>
+                    }
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>

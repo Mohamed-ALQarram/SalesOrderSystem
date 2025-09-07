@@ -1,0 +1,11 @@
+﻿@model Person
+<div class="mb-3">
+
+    @Html.Label("FullName", "Full Name", new { @class = "form-label" })
+    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+</div>
+
+<div class="mb-3">
+    @Html.Label("BillingAddress", "Billing Address", new { @class = "form-label" })
+    @Html.TextBoxFor(m => m.BillingAddress, new { @class = "form-control" })
+</div>

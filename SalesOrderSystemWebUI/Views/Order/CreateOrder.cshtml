@@ -1,0 +1,112 @@
+﻿@model List<Product>
+
+<form asp-action="CreateOrder" method="post">
+
+    <div class="row">
+        <!-- Product List -->
+        <div class="col-md-7">
+            <h4 class="mb-3">📦 Available Products</h4>
+            <div class="row" style="max-height: 400px; overflow-y: auto;">
+                @foreach (var product in Model)
+                {
+                    <div class="col-md-6 mb-3">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title">@product.ProductName</h5>
+                                <p class="text-muted mb-1">💲 @product.Price.ToString("C")</p>
+
+                                <div class="input-group mb-2">
+                                    <input type="number" class="form-control form-control-sm" id="qty_@product.ProductId" value="1" min="1" />
+                                    <button type="button" class="btn btn-primary btn-sm add-to-order"
+                                            data-id="@product.ProductId"
+                                            data-name="@product.ProductName"
+                                            data-price="@product.Price">
+                                        ➕ Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="col-md-5">
+            <h4 class="mb-3">📝 Order Items</h4>
+            <table class="table table-bordered table-striped table-sm" id="orderItemsTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th style="width: 80px;">Qty</th>
+                        <th style="width: 100px;">Price</th>
+                        <th style="width: 100px;">Total</th>
+                        <th style="width: 60px;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Items will be added dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Hidden inputs container -->
+    <div id="orderItemsHidden"></div>
+    <div class="m-3">
+        <label for="CustomerId" class="form-label">Customer Id </label>
+        <input type="number" name="CustomerId" id="CustomerId" class="form-control" />
+    </div>
+
+
+    <button type="submit" class="btn btn-success mt-3">✅ Submit Order</button>
+</form>
+
+
+@section Scripts {
+    <script>
+        let itemIndex = 0;
+
+        $(document).on("click", ".add-to-order", function () {
+            var id = $(this).data("id");
+            var name = $(this).data("name");
+            var price = parseFloat($(this).data("price"));
+            var qty = parseInt($("#qty_" + id).val());
+
+            if (qty > 0) {
+                var total = price * qty;
+
+                // Add row to table
+                var row = `
+                    <tr data-index="${itemIndex}">
+                        <td>${name}</td>
+                        <td>${qty}</td>
+                        <td>${price.toFixed(2)}</td>
+                        <td>${total.toFixed(2)}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm remove-item">❌</button>
+                        </td>
+                    </tr>`;
+                $("#orderItemsTable tbody").append(row);
+
+                // Add hidden inputs
+                var hiddenInputs = `
+                    <div id="item_${itemIndex}">
+                        <input type="hidden" name="Items[${itemIndex}].ProductId" value="${id}" />
+                        <input type="hidden" name="Items[${itemIndex}].Quantity" value="${qty}" />
+                        <input type="hidden" name="Items[${itemIndex}].SalePrice" value="${price}" />
+                    </div>`;
+                $("#orderItemsHidden").append(hiddenInputs);
+
+                itemIndex++;
+            }
+        });
+
+        $(document).on("click", ".remove-item", function () {
+            var row = $(this).closest("tr");
+            var index = row.data("index");
+            row.remove();
+            $("#item_" + index).remove(); // Remove hidden inputs
+        });
+    </script>
+}
