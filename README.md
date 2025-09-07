@@ -1,93 +1,84 @@
-#🛒 Sales Order Management System
+# 🛒 Sales Order Management System  
 
-A multi-tier layered web application built with ASP.NET Core MVC 8 that helps manage customers, stock items, and sales orders. The system supports authentication, role-based authorization, dashboards, and CRUD operations for efficient business management.
+![.NET](https://img.shields.io/badge/.NET-8-blue)  
+![ASP.NET Core MVC](https://img.shields.io/badge/ASP.NET-Core%20MVC-purple)  
+![Entity Framework](https://img.shields.io/badge/Entity%20Framework-Core-green)  
+![License](https://img.shields.io/badge/License-MIT-yellow)  
 
-#🚀 Features
+A **multi-tier ASP.NET Core MVC 8 web application** for managing **customers, sales orders, and inventory**.  
+Includes **role-based authentication**, **dashboard with statistics**, **low-stock alerts**, and full **CRUD operations**.  
 
-Authentication & Authorization
+---
 
-User login & registration with ASP.NET Identity
+## 🚀 Features  
 
-Roles: Admin, Cashier, User
+- 🔑 **Authentication & Authorization**  
+  - Login & registration with ASP.NET Identity  
+  - Roles: `Admin`, `Cashier`, `User`  
 
-Admin Dashboard
+- 📊 **Admin Dashboard**  
+  - Total Customers, Stock Items, Orders, Transactions  
+  - Low stock item alerts  
+  - Recent orders  
 
-View total counts: Customers, Stock Items, Orders, Transactions
+- 👥 **Customer Management** → Full CRUD operations  
+- 📦 **Stock Management** → Monitor inventory and set thresholds  
+- 📝 **Order Management** → Manage orders & order items  
 
-Alerts for low stock items
+---
 
-List of recent orders
+## 🏗️ Project Architecture  
 
-Customer Management
+This project follows **N-Tier Layered Architecture**:  
 
-Create, Read, Update, Delete (CRUD) customers
+- **Model Layer** → `Customer`, `Order`, `OrderItem`, `Stock`, `StockItem`, `Product`, `Payment`, `Transaction`  
+- **Core Layer** → Repository interfaces/contracts  
+- **Data Access Layer (DAL)** → EF Core implementations of repositories  
+- **Business Logic Layer (BLL)** → Business services  
+- **UI Layer** → ASP.NET Core MVC 8 (Views, Controllers, Identity)  
 
-Stock Management
+---
 
-Manage stock items and products
+## 🛠️ Tech Stack  
 
-Monitor stock levels and set critical thresholds
+- **Backend:** ASP.NET Core MVC 8  
+- **Database:** SQL Server + EF Core  
+- **Authentication:** ASP.NET Identity  
+- **Architecture:** N-Tier layered  
 
-Order Management
+---
 
-Create and manage orders
+## 📊 Dashboard Preview (Admin)  
 
-Order items linked with stock and customers
+| Statistic       | Description                       |
+|-----------------|-----------------------------------|
+| 👤 Customers    | Total number of registered users  |
+| 📦 Stock Items  | Available products in inventory   |
+| 🛒 Orders       | Recent sales orders               |
+| 💳 Transactions | Completed payments & records      |
+| ⚠️ Alerts       | Low-stock warnings                |
 
-#🏗️ Project Architecture
+*(Add screenshot here: `![Dashboard Screenshot](assets/dashboard.png)`)*  
 
-This application follows an N-Tier Layered Architecture:
+---
 
-Model Layer
+## 🔑 Roles  
 
-Customer, Order, OrderItem, Stock, StockItem, Product, Payment, Transaction
+| Role    | Permissions                  |
+|---------|------------------------------|
+| Admin   | Full control over the system |
+| Cashier | Manage sales & transactions  |
+| User    | Limited access               |
 
-Core Layer
+---
 
-Repository interfaces and contracts
+## 📂 Folder Structure  
 
-Data Access Layer (DAL)
-
-Entity Framework (EF Core) implementation of repositories
-
-Business Logic Layer (BLL)
-
-Application services for handling core business logic
-
-UI Layer (ASP.NET MVC 8)
-
-Views, Controllers, and Identity integration
-
-#🛠️ Tech Stack
-
-Backend: ASP.NET Core MVC 8, Entity Framework Core
-
-Authentication: ASP.NET Identity (NuGet package)
-
-Database: SQL Server
-
-Architecture: N-Tier (Models, Core, DAL, BLL, UI)
-
-#📊 Dashboard Preview (Admin)
-
-Total Customers
-
-Total Stock Items
-
-Total Orders
-
-Total Transactions
-
-Low Stock Alerts
-
-Recent Orders
-
-(Add a screenshot here when you push the repo — it makes it look much more professional!)
-
-#🔑 Roles
-
-Admin: Full access (manage users, stock, orders, dashboard)
-
-Cashier: Manage orders and transactions
-
-User: Limited access (basic system usage)
+```bash
+SalesOrderSystem/
+│── SalesOrderSystem.Models/        # Entities
+│── SalesOrderSystem.Core/          # Repository Interfaces
+│── SalesOrderSystem.DAL/           # EF Core Implementations
+│── SalesOrderSystem.BLL/           # Business Logic Layer
+│── SalesOrderSystemWebUI/          # ASP.NET Core MVC (UI Layer)
+│── README.md
